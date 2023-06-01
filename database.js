@@ -28,6 +28,7 @@ connection.connect(function(err) {
         if (err) {
           return console.error('error: ' + err.message);
         }
+        console.log("connected")
       
         let createtable1 = `create table if not exists user(
                                 user_id int primary key auto_increment,
@@ -43,7 +44,8 @@ connection.connect(function(err) {
                                 book_name varchar(255)not null,
                                 publisher varchar(255)not null,
                                 ISBN varchar(255)not null,
-                                Request_ID int(1) not null,
+                                Edition int not null,
+                                Request_ID int not null,
                                 User_ID int not null
 
                                 
@@ -62,6 +64,15 @@ connection.connect(function(err) {
           });
       
 });
+
+let sql = `INSERT INTO books (book_name, publisher, ISBN, Edition, Request_ID, User_ID)
+           VALUES('abc','def','def123',1,0,0)`;
+connection.query(sql);
+
+let sql2 = `INSERT INTO books (book_name, publisher, ISBN, Edition, Request_ID, User_ID)
+           VALUES('jhi','def','def123',1,0,0)`;
+connection.query(sql2);
+
 
 module.exports = connection;
 
