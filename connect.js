@@ -7,6 +7,7 @@ var pool = mysql.createPool({
     database: 'lms'
 });
 
+
 pool.getConnection(function(err, connection) {
   // execute query
   // ...
@@ -47,6 +48,11 @@ pool.getConnection(function(err, connection) {
             }
           });
       
+          let sql = `INSERT INTO books(book_name, publisher, ISBN, Request_ID, User_ID)
+           VALUES('abc, def, 12dh, 0, 0')`;
+
+// execute the insert statment
+connection.query(sql);
         
 
 });
