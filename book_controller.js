@@ -15,8 +15,8 @@ connection.query(sql, (error, results, fields) => {
   console.log(results);
 });
 
-let display_unissued_book = `SELECT * FROM books where`;
-connection.query(sql, (error, results, fields) => {
+let display_unissued_book = `SELECT * FROM books where user_ID = ?`;
+connection.query(sql, [false], (error, results, fields) => {
   if (error) {
     return console.error(error.message);
   }
