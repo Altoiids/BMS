@@ -4,7 +4,7 @@ var database = require('../database');
 const path = require('path');
 const rootDir = require("../path")
 
-router.get("/sample_data", function(request, response, next){
+router.get("/books_client", function(request, response, next){
 
 	var query = "SELECT * FROM books where Quantity >= 1";
 
@@ -16,7 +16,7 @@ router.get("/sample_data", function(request, response, next){
 		}
 		else
 		{
-			response.render(path.join(rootDir,"views","books.ejs"), {title:'Books_Inventory', action:'list', sampleData:data});
+			response.render(path.join(rootDir,"views","books_client.ejs"), {title:'Books_Inventory', action:'list', sampleData:data});
 		}
 
 	});

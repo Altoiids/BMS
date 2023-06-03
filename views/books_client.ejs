@@ -136,14 +136,14 @@
                                     <form action="/add_new" method="POST">
                                         <input type="hidden" name="recordId" value="<%= data.book_id %>">
                                         <input type="number" name="quantity" min="1" max="<%= data.quantity %>" required  required placeholder="Enter Quantity">
-                                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                                        <button type="submit">Add</button>
                                       </form>
                                     </div>
 
                                     <form action="/delete" method="POST">
                                         <input type="hidden" name="recordId" value="<%= data.book_id %>">
                                         <input type="number" name="quantity" min="1" max="<%= data.quantity %>" required  required placeholder="Enter Quantity">
-                                        <button type="submit" class="btn btn-primary btn-sm">Delete</button>
+                                        <button type="submit">Delete</button>
                                       </form>
                                     </div>
 

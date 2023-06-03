@@ -45,8 +45,9 @@ connection.connect(function(err) {
                                 publisher varchar(255)not null,
                                 ISBN varchar(255)not null,
                                 Edition int not null,
-                                Request_ID int not null,
-                                User_ID int not null
+                                Quantity int not null,
+                                Request_ID int not null default 0,
+                                User_ID int not null default 0
 
                                 
                             )`;                    
@@ -65,12 +66,12 @@ connection.connect(function(err) {
       
 });
 
-let sql = `INSERT INTO books (book_name, publisher, ISBN, Edition, Request_ID, User_ID)
-           VALUES('abc','def','def123',1,0,0)`;
+let sql = `INSERT INTO books (book_name, publisher, ISBN, Edition, Quantity, Request_ID, User_ID)
+           VALUES('abc','def','def123',1,10,0,0)`;
 connection.query(sql);
 
-let sql2 = `INSERT INTO books (book_name, publisher, ISBN, Edition, Request_ID, User_ID)
-           VALUES('jhi','def','def123',1,0,0)`;
+let sql2 = `INSERT INTO books (book_name, publisher, ISBN, Edition,Quantity, Request_ID, User_ID)
+           VALUES('jhi','def','def123',1,0,0,0)`;
 connection.query(sql2);
 
 
