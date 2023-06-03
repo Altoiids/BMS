@@ -68,7 +68,7 @@ router.post("/book_admin/add_sample_data", function(request, response, next){
 router.post('/delete', (req, res) => {
 	const { recordId, quantity } = req.body;
   
-	// Construct and execute the DELETE query
+	
 	const query = `UPDATE books SET Quantity = Quantity - ${quantity} WHERE book_id = ${recordId} and Quantity >= ${quantity}`;
 	database.query(query, (err, result) => {
 	  if (err) {
@@ -76,9 +76,9 @@ router.post('/delete', (req, res) => {
 		res.sendStatus(500);
 	  } else {
 		if (result.affectedRows > 0) {
-		  res.redirect('/sample_data'); // Redirect to the main page after successful deletion
+		  res.redirect('/sample_data'); 
 		} else {
-		  res.sendStatus(404); // Record not found or invalid quantity
+		  res.sendStatus(404); 
 		  
 		}
 	  }
@@ -89,7 +89,7 @@ router.post('/delete', (req, res) => {
   router.post('/add_new', (req, res) => {
 	const { recordId, quantity } = req.body;
   
-	// Construct and execute the DELETE query
+	
 	const query = `UPDATE books SET Quantity = Quantity + ${quantity} WHERE book_id = ${recordId}`;
 	database.query(query, (err, result) => {
 	  if (err) {
@@ -97,7 +97,7 @@ router.post('/delete', (req, res) => {
 		res.sendStatus(500);
 	  } else {
 		if (result.affectedRows > 0) {
-		  res.redirect('/sample_data'); // Redirect to the main page after successful deletion
+		  res.redirect('/sample_data'); 
 		} 
 	  }
 	});

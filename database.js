@@ -22,8 +22,6 @@ let connection = mysql.createConnection({
 
 
 connection.connect(function(err) {
-  // execute query
-  // ...
 
         if (err) {
           return console.error('error: ' + err.message);
@@ -36,7 +34,7 @@ connection.connect(function(err) {
                                 email varchar(255)not null,
                                 salt char(60) NOT NULL,
                                 hash char(60) NOT NULL, 
-                                Admin_id int(1) NOT NULL
+                                Admin_id int(1) NOT NULL default 0
                             )`;
 
         let createtable2 = `create table if not exists books(
@@ -50,7 +48,17 @@ connection.connect(function(err) {
                                 User_ID int not null default 0
 
                                 
-                            )`;                    
+                            )`;
+        
+          let createtable3 = `create table if not exists request(
+                              request_id int primary key auto_increment,
+                              book_id int not null,
+                              user_id int not null,
+                              type varchar(255)not null
+                              
+                          )`;                     
+                            
+
       
         connection.query(createtable1, function(err, results, fields) {
           if (err) {
@@ -63,16 +71,15 @@ connection.connect(function(err) {
               console.log(err.message);
             }
           });
+          connection.query(createtable3, function(err, results, fields) {
+            if (err) {
+              console.log(err.message);
+            }
+          });
       
 });
 
-let sql = `INSERT INTO books (book_name, publisher, ISBN, Edition, Quantity, Request_ID, User_ID)
-           VALUES('abc','def','def123',1,10,0,0)`;
-connection.query(sql);
 
-let sql2 = `INSERT INTO books (book_name, publisher, ISBN, Edition,Quantity, Request_ID, User_ID)
-           VALUES('jhi','def','def123',1,0,0,0)`;
-connection.query(sql2);
 
 
 module.exports = connection;

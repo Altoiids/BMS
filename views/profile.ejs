@@ -31,83 +31,26 @@
         </div>
       </nav>
       <div class="container">
-        <h1 class="text-center mt-3 mb-3"><%= title %></h1>
+        <h1 class="text-center mt-3 mb-3">Welcome <%= title %></h1>
         
-        <% if(action == 'add') { %>
-            <div class="card">
-                <div class="card-header">Add New Book</div>
-                <div class="card-body">
-                    <form method="POST" action="/book_admin/add_sample_data">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label>Book_name</label>
-                                    <input type="text" name="book_name" id="first_name" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label>Publisher</label>
-                                    <input type="text" name="publisher" id="last_name" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label>ISBN</label>
-                                    <input type="text" name="ISBN" id="age" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label>Edition</label>
-                                    <input type="number" name="Edition" id="age" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label>Quantity</label>
-                                    <input type="number" name="Quantity" id="age" class="form-control" />
-                                </div>
-                            </div>
-                           
-                        </div>
-
-                        <div class="mb-3">
-                            <input type="submit" name="submit_button" class="btn btn-primary" value="Add" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
-        <% } else { %>
+        
             
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col">Available Books</div>
-                    <div class="col">
-                        <a href="/book_admi/add" class="btn btn-success btn-sm float-end">Add New Book</a>
-
-                    </div>
+                    <div class="col">Books Inventory</div>
+                    
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <tr>
-                            <th>Book_ID</th>
                             <th>Book_name</th>
                             <th>Publisher</th>
                             <th>ISBN</th>
                             <th>Edition</th>
-                    
-                            <th>Quantity</th>
+                            <th>Status</th>
                             <th>Action</th>
                             
                         </tr>
@@ -127,10 +70,7 @@
                                 
                                 
                                     <div>
-                                      <!-- Display record information -->
-                                      
-                                  
-                                    
+                                
                                       
                                  
                                     <form action="/add_new" method="POST">
@@ -167,7 +107,7 @@
             </div>
         </div>
 
-        <% } %>
+        <% 
 
     </div> 
     
