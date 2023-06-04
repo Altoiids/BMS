@@ -28,10 +28,10 @@ router.get("/profile",validateToken, (req, res) => {
 				}
 			//PROFILE PAGE IS NOT COMPLETED	
 					
-				const query = `select * from requests where user_id=${database.escape(results[0].user_id)}`;
-				database.query(query, (err, requestdata) => {
+				const query = `select * from user where user_id=${database.escape(results[0].user_id)}`;
+				database.query(query, (err, data) => {
 							if (err) throw err;
-							response.render(path.join(rootDir,"views","profile.ejs"), {title: username, action:'list', sampleData:data});
+							res.render(path.join(rootDir,"views","profile.ejs"), {title: "hello", action:'list', sampleData:data});
 						});
 					}
                     

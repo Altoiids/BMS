@@ -7,12 +7,12 @@ const app = express();
 const path = require('path');
 
 
-
-
 const homerouter = require("./routes/home");
 const books_inventory = require("./routes/book_admin");
 const books_browse = require("./routes/book_client");
 const login_page = require("./routes/login_signup");
+const profile_page = require("./routes/profile");
+
 app.set('views', path.join(__dirname, 'views'));
 
 
@@ -26,6 +26,7 @@ app.use(homerouter);
 app.use(books_inventory);
 app.use(books_browse);
 app.use(login_page);
+app.use(profile_page);
 
 app.use(express.static(path.join(__dirname, '/public')));
 

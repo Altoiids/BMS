@@ -55,6 +55,7 @@ var query = `
 	VALUES ("${name}", "${email}", "${pass.salt}", "${pass.hash}")
 	`;
 
+
 	database.query(query, function(error, data){
 
 		if(error)
@@ -62,6 +63,11 @@ var query = `
 			throw error;
 		}	
 		else{
+			const accessToken = createTokens(name);
+			res.cookie("access-token", accessToken, {
+				maxAge: 60 * 60 * 24 * 30 * 1000,
+				httpOnly: true,});
+
             console.log("redirected");
 	        res.redirect(`/profile?username=${name}`);
         }
