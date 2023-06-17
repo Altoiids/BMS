@@ -18,17 +18,17 @@ let connection = mysql.createConnection({
 });
 
 
-  
 
 
-connection.connect(function(err) {
 
-        if (err) {
-          return console.error('error: ' + err.message);
-        }
-        console.log("connected")
-      
-        let createtable1 = `create table if not exists user(
+connection.connect(function (err) {
+
+  if (err) {
+    return console.error('error: ' + err.message);
+  }
+  console.log("connected")
+
+  let createtable1 = `create table if not exists user(
                                 user_id int primary key auto_increment,
                                 name varchar(255)not null,
                                 email varchar(255)not null,
@@ -37,7 +37,7 @@ connection.connect(function(err) {
                                 Admin_id int(1) NOT NULL default 0
                             )`;
 
-        let createtable2 = `create table if not exists books(
+  let createtable2 = `create table if not exists books(
                                 book_id int primary key auto_increment,
                                 book_name varchar(255)not null,
                                 publisher varchar(255)not null,
@@ -49,38 +49,17 @@ connection.connect(function(err) {
 
                                 
                             )`;
-        
-          let createtable3 = `create table if not exists request(
+
+  let createtable3 = `create table if not exists request(
                               request_id int primary key auto_increment,
                               book_id int not null,
                               user_id int not null,
-                              type varchar(255)not null
+                              status varchar(255)not null
                               
-                          )`;                     
-                            
+                          )`;
 
-      
-        connection.query(createtable1, function(err, results, fields) {
-          if (err) {
-            console.log(err.message);
-          }
-        });
 
-        connection.query(createtable2, function(err, results, fields) {
-            if (err) {
-              console.log(err.message);
-            }
-          });
-          connection.query(createtable3, function(err, results, fields) {
-            if (err) {
-              console.log(err.message);
-            }
-          });
-      
 });
-
-
-
 
 module.exports = connection;
 

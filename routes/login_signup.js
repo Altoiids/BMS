@@ -7,7 +7,7 @@ const rootDir = require("../path")
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
-const { createTokens, validateToken } = require(path.join(rootDir,"JWT.js"));
+const { createTokens, validateToken } = require(path.join(rootDir, "JWT.js"));
 
 
 async function hashPassword(password) {
@@ -21,66 +21,57 @@ async function hashPassword(password) {
 	};
 }
 
-
 router.use(cookieParser());
 
+router.get("/login", function (request, response, next) {
 
-router.get("/login", function(request, response, next){
-
-	response.render(path.join(rootDir,"views","login.ejs"), {title:'Add New Book', action:'add'});
-
-});
-
-router.get("/signup", function(request, response, next){
-
-	response.render(path.join(rootDir,"views","signup.ejs"), {title:'Add New Book', action:'add'});
+	response.render(path.join(rootDir, "views", "login.ejs"), {});
 
 });
 
+router.get("/signup", function (request, response, next) {
 
+	response.render(path.join(rootDir, "views", "signup.ejs"), { title: 'Add New Book', action: 'add' });
 
-router.post("/signup", async(request, res) => {
-    
+});
 
-    var name = request.body.name;
+router.post("/signup", async (request, res) => {
+
+	var name = request.body.name;
 	var email = request.body.email;
 	var password = request.body.password;
-    var passwordc = request.body.passwordc;
-    var pass = await hashPassword(password);
+	var passwordc = request.body.passwordc;
+	var pass = await hashPassword(password);
 
 
-var query = `
+	var query = `
 	INSERT INTO user 
 	(name, email, salt, hash) 
 	VALUES ("${name}", "${email}", "${pass.salt}", "${pass.hash}")
 	`;
 
 
-	database.query(query, function(error, data){
+	database.query(query, function (error, data) {
 
-		if(error)
-		{
+		if (error) {
 			throw error;
-		}	
-		else{
+		}
+		else {
 			const accessToken = createTokens(name);
 			res.cookie("access-token", accessToken, {
 				maxAge: 60 * 60 * 24 * 30 * 1000,
-				httpOnly: true,});
+				httpOnly: true,
+			});
 
-            console.log("redirected");
-	        res.redirect(`/profile?username=${name}`);
-        }
+			console.log("redirected");
+			res.redirect(`/profile?username=${name}`);
+		}
 
 	});
 
-  });
+});
 
-
-  
-  
-
-  router.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	if (!email || !password) res.redirect("/login");
 	else {
@@ -97,11 +88,11 @@ var query = `
 						res.redirect("/login");
 					} else {
 						const accessToken = createTokens(result[0]);
-                        res.cookie("access-token", accessToken, {
-                            maxAge: 60 * 60 * 24 * 30 * 1000,
-                            httpOnly: true,
-                          });
-                    
+						res.cookie("access-token", accessToken, {
+							maxAge: 60 * 60 * 24 * 1000,
+							httpOnly: true,
+						});
+
 						res.redirect(`/profile?username=${result[0].name}`);
 					}
 				}
@@ -110,5 +101,5 @@ var query = `
 	}
 });
 
-  
-  module.exports = router;
+
+module.exports = router;

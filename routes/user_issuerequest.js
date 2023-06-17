@@ -11,10 +11,10 @@ const { createTokens, validateToken } = require(path.join(rootDir, "JWT.js"));
 router.use(cookieParser());
 
 
-router.get("/profile", validateToken, (req, res) => {
+router.get("/user_issuerequest", validateToken, (req, res) => {
 	const username = req.query.username;
 	if (!username) {
-		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
+		res.sendStatus(404);
 	} else {
 		database.query(
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
@@ -26,36 +26,38 @@ router.get("/profile", validateToken, (req, res) => {
 				if (!results[0]) {
 					res.redirect("/");
 				}
-				
+
 
 				const query1 = `
-                 SELECT b.*
-                 FROM request r
-                 JOIN books b ON r.book_id = b.book_id
-                 WHERE r.user_id = ${results[0].user_id} and r.status = 'owned';
-                 `;
+  SELECT b.*
+  FROM request r
+  JOIN books b ON r.book_id = b.book_id
+  WHERE r.user_id = ${results[0].user_id} and r.status = 'issue requested';
+`;
 				console.log(results[0].user_id);
 
 				database.query(query1, (err, data) => {
 
 					if (err) throw err;
-					res.render(path.join(rootDir, "views", "profile.ejs"), { username: username, sampleData: data, user_id: results[0].user_id });
+					res.render(path.join(rootDir, "views", "user_issuerequest.ejs"), { username: username, sampleData: data });
 				});
+
+
+
 			}
 
 		)
 	};
+
 });
 
-router.post("/make_rr", validateToken, (req, res) => {
+router.post("/withdraw_ir", validateToken, (req, res) => {
 
-	const { recordId, username, userId } = req.body;
+	const { recordId, username } = req.body;
 	console.log(recordId);
 	console.log(username);
-	console.log(userId);
 	var query2 = `
-				UPDATE request SET status = "return requested" WHERE user_id = ${userId} and book_id=${recordId};
-`;
+				DELETE FROM request WHERE book_id = ${recordId} and status != "owned";`;
 
 	database.query(query2, (err, result) => {
 		if (err) {
@@ -63,7 +65,7 @@ router.post("/make_rr", validateToken, (req, res) => {
 			res.sendStatus(500);
 		} else {
 			if (result.affectedRows > 0) {
-				res.redirect(`profile?username=${username}`);
+				res.redirect(`user_issuerequest?username=${username}`);
 			} else {
 				res.sendStatus(404);
 			}
@@ -73,10 +75,12 @@ router.post("/make_rr", validateToken, (req, res) => {
 	});
 });
 
+
 router.post('/logoutU', (req, res) => {
 	res.clearCookie('access-token');
 	res.redirect("/login")
 });
+
 
 
 module.exports = router;

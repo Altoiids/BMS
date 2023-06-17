@@ -2,7 +2,7 @@ const { sign, verify } = require("jsonwebtoken");
 
 const createTokens = (user) => {
   const accessToken = sign(
-    { username: user},
+    { username: user },
     process.env.JWTSECRETKEY
   );
 
@@ -16,10 +16,10 @@ const validateToken = (req, res, next) => {
     return res.status(400).json({ error: "User not Authenticated!" });
 
   try {
-    
+
     const validToken = verify(accessToken, process.env.JWTSECRETKEY);
     console.log("check");
-    
+
     if (validToken) {
       req.authenticated = true;
       console.log("done");

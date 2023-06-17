@@ -3,20 +3,25 @@ var router = express.Router();
 var database = require('../database');
 const path = require('path');
 const rootDir = require("../path")
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const cookieParser = require("cookie-parser");
+const { createTokens, validateToken } = require(path.join(rootDir, "JWT.js"));
 
-router.get("/sample_data", function(request, response, next){
+router.use(cookieParser());
 
+
+router.get("/inventory", validateToken, function (request, response, next) {
+	var username = request.query.username;
 	var query = "SELECT * FROM books where Quantity >= 1";
 
-	database.query(query, function(error, data){
+	database.query(query, function (error, data) {
 
-		if(error)
-		{
-			throw error; 
+		if (error) {
+			throw error;
 		}
-		else
-		{
-			response.render(path.join(rootDir,"views","books.ejs"), {title:'Books_Inventory', action:'list', sampleData:data});
+		else {
+			response.render(path.join(rootDir, "views", "books.ejs"), { title: 'Books_Inventory', action: 'list', sampleData: data });
 		}
 
 	});
@@ -25,13 +30,13 @@ router.get("/sample_data", function(request, response, next){
 
 
 
-router.get("/book_admi/add", function(request, response, next){
+router.get("/addd", validateToken, function (request, response, next) {
 
-	response.render(path.join(rootDir,"views","books.ejs"), {title:'Add New Book', action:'add'});
+	response.render(path.join(rootDir, "views", "books.ejs"), { title: 'Add New Book', action: 'add' });
 
 });
 
-router.post("/book_admin/add_sample_data", function(request, response, next){
+router.post("/book_admin/add_sample_data", validateToken, function (request, response, next) {
 
 	var book_name = request.body.book_name;
 
@@ -46,18 +51,16 @@ router.post("/book_admin/add_sample_data", function(request, response, next){
 	var query = `
 	INSERT INTO books
 	(book_name, publisher, ISBN, Edition, Quantity) 
-	VALUES ("${book_name}", "${publisher}", "${ISBN}", "${Edition}", "${Quantity}" )
+	VALUES (${database.escape(book_name)}, ${database.escape(publisher)}, ${database.escape(ISBN)}, "${Edition}", "${Quantity}" )
 	`;
 
-	database.query(query, function(error, data){
+	database.query(query, function (error, data) {
 
-		if(error)
-		{
+		if (error) {
 			throw error;
-		}	
-		else
-		{
-			response.redirect("/sample_data");
+		}
+		else {
+			response.redirect("/inventory");
 		}
 
 	});
@@ -65,44 +68,47 @@ router.post("/book_admin/add_sample_data", function(request, response, next){
 });
 
 
-router.post('/delete', (req, res) => {
+router.post('/delete', validateToken, (req, res) => {
 	const { recordId, quantity } = req.body;
-  
-	
+
+
 	const query = `UPDATE books SET Quantity = Quantity - ${quantity} WHERE book_id = ${recordId} and Quantity >= ${quantity}`;
 	database.query(query, (err, result) => {
-	  if (err) {
-		console.error(err);
-		res.sendStatus(500);
-	  } else {
-		if (result.affectedRows > 0) {
-		  res.redirect('/sample_data'); 
+		if (err) {
+			console.error(err);
+			res.sendStatus(500);
 		} else {
-		  res.sendStatus(404); 
-		  
+			if (result.affectedRows > 0) {
+				res.redirect('/inventory');
+			} else {
+				res.sendStatus(404);
+
+			}
 		}
-	  }
 	});
-  });
+});
 
 
-  router.post('/add_new', (req, res) => {
+router.post('/add_new', validateToken, (req, res) => {
 	const { recordId, quantity } = req.body;
-  
-	
+
+
 	const query = `UPDATE books SET Quantity = Quantity + ${quantity} WHERE book_id = ${recordId}`;
 	database.query(query, (err, result) => {
-	  if (err) {
-		console.error(err);
-		res.sendStatus(500);
-	  } else {
-		if (result.affectedRows > 0) {
-		  res.redirect('/sample_data'); 
-		} 
-	  }
+		if (err) {
+			console.error(err);
+			res.sendStatus(500);
+		} else {
+			if (result.affectedRows > 0) {
+				res.redirect('/inventory');
+			}
+		}
 	});
-  });
-
+});
+router.post('/logout', (req, res) => {
+	res.clearCookie('access-token');
+	res.redirect("/alogin")
+});
 
 module.exports = router;
 
