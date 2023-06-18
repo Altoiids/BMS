@@ -13,7 +13,7 @@ router.use(cookieParser());
 
 router.get("/profile", validateToken, (req, res) => {
 	const username = req.username.name;
-	
+	console.log(username);
 	if (!username) {
 		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
 	} else {
@@ -41,7 +41,36 @@ router.get("/profile", validateToken, (req, res) => {
 		)
 	};
 });
+router.get("/profile_new", validateToken, (req, res) => {
+	const username = req.username;
+	console.log(username);
+	if (!username) {
+		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
+	} else {
+		database.query(
+			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
+			async (error, results) => {
+				if (error) {
+					
+					return;
+				}
+				if (!results[0]) {
+					res.redirect("/");
+				}
+				
 
+				const query1 = `SELECT b.* FROM request r JOIN books b ON r.book_id = b.book_id WHERE r.user_id = ${results[0].user_id} and r.status = 'owned';`;
+
+				database.query(query1, (err, data) => {
+
+					if (err) throw err;
+					res.render(path.join(rootDir, "views", "profile.ejs"), { username: username, sampleData: data, user_id: results[0].user_id });
+				});
+			}
+
+		)
+	};
+});
 router.post("/make_rr", validateToken, (req, res) => {
 
 	const { recordId, username, userId } = req.body;

@@ -43,7 +43,10 @@ router.post("/signup", async (request, res) => {
 	var passwordc = request.body.passwordc;
 	var pass = await hashPassword(password);
 
+	var query5 = `SELECT * FROM user WHERE email = ${database.escape(email)}`;
 
+	database.query(query5, (err, result) => {
+		if (!result[0]) {
 	var query = `INSERT INTO user (name, email, salt, hash) VALUES ("${name}", "${email}", "${pass.salt}", "${pass.hash}")`;
 
 	database.query(query, function (error, data) {
@@ -58,10 +61,18 @@ router.post("/signup", async (request, res) => {
 				httpOnly: true,
 			});
 
-			res.redirect(`/profile`);
+			res.redirect(`/profile_new`);
 		}
 
-	});
+	})}
+	else { const script = `
+	<script>
+	  alert('Email already inuse');
+	  window.history.back();
+	</script>
+  `;
+  res.send(script); }
+});
 
 });
 
