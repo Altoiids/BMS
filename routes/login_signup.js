@@ -43,6 +43,16 @@ router.post("/signup", async (request, res) => {
 	var passwordc = request.body.passwordc;
 	var pass = await hashPassword(password);
 
+	if (password !== passwordc){
+		const script = `
+		<script>
+		  alert('password mismatch');
+		  window.history.back();
+		</script>
+	  `;
+	  res.send(script);
+	}else{
+
 	var query5 = `SELECT * FROM user WHERE email = ${database.escape(email)}`;
 
 	database.query(query5, (err, result) => {
@@ -61,7 +71,7 @@ router.post("/signup", async (request, res) => {
 				httpOnly: true,
 			});
 
-			res.redirect(`/profile_new`);
+			res.redirect(`/profile`);
 		}
 
 	})}
@@ -73,7 +83,7 @@ router.post("/signup", async (request, res) => {
   `;
   res.send(script); }
 });
-
+	}
 });
 
 router.post("/login", async (req, res) => {

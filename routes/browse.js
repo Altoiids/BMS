@@ -15,8 +15,36 @@ router.get("/browse", validateToken, (req, res) => {
 	var username = req.username.name;
 	
 	if (!username) {
-		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
-	} else {
+		var username = req.username;
+		if(!username){
+			res.sendStatus(404);
+	} 
+   else {
+		database.query(
+			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
+			async (error, results) => {
+				if (error) {
+					return;
+				}
+				if (!results[0]) {
+					res.redirect("/");
+				}
+
+
+				const query1 = `SELECT * FROM books WHERE Quantity >= 1;`;
+
+				database.query(query1, (err, data) => {
+
+					if (err) throw err;
+					
+					res.render(path.join(rootDir, "views", "browse_books.ejs"), { sampleData: data, username: username, user_id: results[0].user_id });
+
+				});
+
+			}
+
+		)}}
+	else{
 		database.query(
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
@@ -41,7 +69,7 @@ router.get("/browse", validateToken, (req, res) => {
 			}
 
 		)
-	};
+	}
 });
 
 

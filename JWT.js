@@ -11,7 +11,7 @@ const createTokens = (user) => {
 
 const validateToken = (req, res, next) => {
   const accessToken = req.cookies["access-token"];
-  console.log(accessToken);
+  
   if (!accessToken)
     return res.status(400).json({ error: "User not authenticated!" });
 
@@ -21,7 +21,7 @@ const validateToken = (req, res, next) => {
     req.username = username;
     return next();
   } catch (err) {
-    console.log(err);
+    
     return res.status(400).json({ error: err });
   }
 };

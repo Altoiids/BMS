@@ -12,10 +12,12 @@ router.use(cookieParser());
 
 
 router.get("/profile", validateToken, (req, res) => {
-	const username = req.username.name;
-	console.log(username);
+	var username = req.username.name;
+	
 	if (!username) {
-		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
+		var username = req.username;
+		if(!username){
+			res.sendStatus(404);
 	} else {
 		database.query(
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
@@ -38,15 +40,9 @@ router.get("/profile", validateToken, (req, res) => {
 				});
 			}
 
-		)
-	};
-});
-router.get("/profile_new", validateToken, (req, res) => {
-	const username = req.username;
-	console.log(username);
-	if (!username) {
-		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
-	} else {
+		)}
+	}
+	else{
 		database.query(
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
@@ -69,8 +65,9 @@ router.get("/profile_new", validateToken, (req, res) => {
 			}
 
 		)
-	};
+	}
 });
+
 router.post("/make_rr", validateToken, (req, res) => {
 
 	const { recordId, username, userId } = req.body;

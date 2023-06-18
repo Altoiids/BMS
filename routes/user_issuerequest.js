@@ -12,10 +12,43 @@ router.use(cookieParser());
 
 
 router.get("/user_issuerequest", validateToken, (req, res) => {
-	const username = req.username.name;
+	var username = req.username.name;
+
 	if (!username) {
-		res.sendStatus(404);
-	} else {
+
+		var username = req.username;
+
+		if(!username){
+			res.sendStatus(404);}
+	else {
+		database.query(
+			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
+			async (error, results) => {
+				if (error) {
+					return;
+				}
+				if (!results[0]) {
+					res.redirect("/");
+				}
+
+
+				const query1 = `SELECT b.* FROM request r JOIN books b ON r.book_id = b.book_id WHERE r.user_id = ${results[0].user_id} and r.status = 'issue requested';`;
+
+
+				database.query(query1, (err, data) => {
+
+					if (err) throw err;
+					res.render(path.join(rootDir, "views", "user_issuerequest.ejs"), { username: username, sampleData: data });
+				});
+
+
+
+			}
+
+		)}
+		}
+	else {
+
 		database.query(
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
@@ -41,7 +74,8 @@ router.get("/user_issuerequest", validateToken, (req, res) => {
 			}
 
 		)
-	};
+
+	}
 
 });
 
