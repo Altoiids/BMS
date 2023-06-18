@@ -64,7 +64,7 @@ router.post("/signup", async (request, res) => {
 			});
 
 			console.log("redirected");
-			res.redirect(`/profile?username=${name}`);
+			res.redirect(`/profile`);
 		}
 
 	});
@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
 							httpOnly: true,
 						});
 
-						res.redirect(`/profile?username=${result[0].name}`);
+						res.redirect(`/profile`);
 					}
 				}
 			}

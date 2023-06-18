@@ -12,7 +12,7 @@ router.use(cookieParser());
 
 
 router.get("/inventory", validateToken, function (request, response, next) {
-	var username = request.query.username;
+	
 	var query = "SELECT * FROM books where Quantity >= 1";
 
 	database.query(query, function (error, data) {
@@ -81,7 +81,13 @@ router.post('/delete', validateToken, (req, res) => {
 			if (result.affectedRows > 0) {
 				res.redirect('/inventory');
 			} else {
-				res.sendStatus(404);
+				const script = `
+				<script>
+				  alert('Invalid quantity entered.');
+				  window.history.back();
+				</script>
+			  `;
+			  res.send(script);
 
 			}
 		}

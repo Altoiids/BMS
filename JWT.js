@@ -11,22 +11,17 @@ const createTokens = (user) => {
 
 const validateToken = (req, res, next) => {
   const accessToken = req.cookies["access-token"];
-  console.log(accessToken)
+  console.log(accessToken);
   if (!accessToken)
-    return res.status(400).json({ error: "User not Authenticated!" });
+    return res.status(400).json({ error: "User not authenticated!" });
 
   try {
-
-    const validToken = verify(accessToken, process.env.JWTSECRETKEY);
-    console.log("check");
-
-    if (validToken) {
-      req.authenticated = true;
-      console.log("done");
-      return next();
-    }
+    const decodedToken = verify(accessToken, process.env.JWTSECRETKEY);
+    const username = decodedToken.username; 
+    req.username = username;
+    return next();
   } catch (err) {
-    console.log("check check");
+    console.log(err);
     return res.status(400).json({ error: err });
   }
 };

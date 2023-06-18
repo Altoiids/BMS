@@ -52,7 +52,7 @@ router.post("/alogin", async (req, res) => {
 							httpOnly: true,
 						});
 
-						res.redirect(`/inventory?username=${result[0].name}`);
+						res.redirect(`/inventory`);
 					}
 				}
 			}

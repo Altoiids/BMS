@@ -12,7 +12,7 @@ router.use(cookieParser());
 
 
 router.get("/browse", validateToken, (req, res) => {
-	var username = req.query.username;
+	var username = req.username.name;
 	console.log(username);
 	if (!username) {
 		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
@@ -70,8 +70,8 @@ router.post("/issue", validateToken, (req, res) => {
 				}
 				else {
 					if (result.affectedRows > 0) {
-						res.redirect(`/browse?username=${username}`);
-						console.log("done done");
+						res.redirect(`/browse`);
+						
 					}
 					else {
 						res.sendStatus(404);
@@ -82,7 +82,13 @@ router.post("/issue", validateToken, (req, res) => {
 
 
 		}
-		else { res.redirect(`/browse?username=${username}`);; }
+		else { const script = `
+		<script>
+		  alert('Book Already Requested');
+		  window.history.back();
+		</script>
+	  `;
+	  res.send(script); }
 	});
 });
 

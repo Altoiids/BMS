@@ -12,7 +12,7 @@ router.use(cookieParser());
 
 
 router.get("/user_issuerequest", validateToken, (req, res) => {
-	const username = req.query.username;
+	const username = req.username.name;
 	if (!username) {
 		res.sendStatus(404);
 	} else {

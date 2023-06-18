@@ -12,7 +12,8 @@ router.use(cookieParser());
 
 
 router.get("/profile", validateToken, (req, res) => {
-	const username = req.query.username;
+	const username = req.username.name;
+	console.log(username);
 	if (!username) {
 		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
 	} else {
