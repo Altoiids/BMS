@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
 	if (!email || !password) res.redirect("/login");
 	else {
 		database.query(
-			`select * from user where email = ${database.escape(email)}`,
+			`select * from user where email = ${database.escape(email)} and Admin_id = 0` ,
 			async (err, result) => {
 				if (err) throw err;
 				if (!result[0]) {
