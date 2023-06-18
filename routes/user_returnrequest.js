@@ -20,7 +20,7 @@ router.get("/user_returnrequest", validateToken, (req, res) => {
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
 				if (error) {
-					console.log(error);
+					
 					return;
 				}
 				if (!results[0]) {
@@ -47,12 +47,8 @@ router.get("/user_returnrequest", validateToken, (req, res) => {
 router.post("/withdraw_rr", validateToken, (req, res) => {
 
 	const { recordId, username, userId } = req.body;
-	console.log(recordId);
-	console.log(username);
-	console.log(userId);
-	var query2 = `
-				UPDATE request SET status = "owned" WHERE user_id = ${userId} and book_id = ${recordId};
-`;
+	
+	var query2 = `UPDATE request SET status = "owned" WHERE user_id = ${userId} and book_id = ${recordId};`;
 
 	database.query(query2, (err, result) => {
 		if (err) {
@@ -60,7 +56,7 @@ router.post("/withdraw_rr", validateToken, (req, res) => {
 			res.sendStatus(500);
 		} else {
 			if (result.affectedRows > 0) {
-				res.redirect(`user_returnrequest?username=${username}`);
+				res.redirect(`user_returnrequest`);
 			} else {
 				res.sendStatus(404);
 			}

@@ -40,11 +40,7 @@ router.post("/addadmin", async (request, res) => {
     var pass = await hashPassword(password);
 
 
-    var query = `
-	INSERT INTO user 
-	(name, email, salt, hash, Admin_id) 
-	VALUES ("${database.escape(name)}", "${database.escape(email)}", "${pass.salt}", "${pass.hash}", 1)
-	`;
+    var query = `INSERT INTO user (name, email, salt, hash, Admin_id) VALUES ("${database.escape(name)}", "${database.escape(email)}", "${pass.salt}", "${pass.hash}", 1)`;
 
 
     database.query(query, function (error, data) {
@@ -53,7 +49,7 @@ router.post("/addadmin", async (request, res) => {
             throw error;
         }
         else {
-            console.log("redirected");
+           
             res.redirect(`/add_admin`);
         }
 

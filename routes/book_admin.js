@@ -46,13 +46,9 @@ router.post("/book_admin/add_sample_data", validateToken, function (request, res
 
 	var Edition = request.body.Edition;
 	var Quantity = request.body.Quantity;
-	console.log(request.body);
+	
 
-	var query = `
-	INSERT INTO books
-	(book_name, publisher, ISBN, Edition, Quantity) 
-	VALUES (${database.escape(book_name)}, ${database.escape(publisher)}, ${database.escape(ISBN)}, "${Edition}", "${Quantity}" )
-	`;
+	var query = `INSERT INTO books (book_name, publisher, ISBN, Edition, Quantity) VALUES (${database.escape(book_name)}, ${database.escape(publisher)}, ${database.escape(ISBN)}, "${Edition}", "${Quantity}" )`;
 
 	database.query(query, function (error, data) {
 

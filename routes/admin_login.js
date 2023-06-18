@@ -43,8 +43,13 @@ router.post("/alogin", async (req, res) => {
 				} else {
 					let hash = await bcrypt.hash(password, result[0].salt);
 					if (hash !== result[0].hash || result[0].Admin_id != 1) {
-						console.log("passwords don't match");
-						res.redirect(`/alogin`);
+						const script = `
+						<script>
+						  alert('Passwords don't match');
+						  window.history.back();
+						</script>
+					  `;
+					  res.send(script);
 					} else {
 						const accessToken = createTokens(result[0]);
 						res.cookie("access-token", accessToken, {

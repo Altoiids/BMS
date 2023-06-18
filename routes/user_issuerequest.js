@@ -20,7 +20,6 @@ router.get("/user_issuerequest", validateToken, (req, res) => {
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
 				if (error) {
-					console.log(error);
 					return;
 				}
 				if (!results[0]) {
@@ -28,13 +27,8 @@ router.get("/user_issuerequest", validateToken, (req, res) => {
 				}
 
 
-				const query1 = `
-  SELECT b.*
-  FROM request r
-  JOIN books b ON r.book_id = b.book_id
-  WHERE r.user_id = ${results[0].user_id} and r.status = 'issue requested';
-`;
-				console.log(results[0].user_id);
+				const query1 = `SELECT b.* FROM request r JOIN books b ON r.book_id = b.book_id WHERE r.user_id = ${results[0].user_id} and r.status = 'issue requested';`;
+
 
 				database.query(query1, (err, data) => {
 
@@ -54,8 +48,6 @@ router.get("/user_issuerequest", validateToken, (req, res) => {
 router.post("/withdraw_ir", validateToken, (req, res) => {
 
 	const { recordId, username } = req.body;
-	console.log(recordId);
-	console.log(username);
 	var query2 = `
 				DELETE FROM request WHERE book_id = ${recordId} and status != "owned";`;
 
@@ -65,7 +57,7 @@ router.post("/withdraw_ir", validateToken, (req, res) => {
 			res.sendStatus(500);
 		} else {
 			if (result.affectedRows > 0) {
-				res.redirect(`user_issuerequest?username=${username}`);
+				res.redirect(`user_issuerequest`);
 			} else {
 				res.sendStatus(404);
 			}

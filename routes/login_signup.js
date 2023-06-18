@@ -44,12 +44,7 @@ router.post("/signup", async (request, res) => {
 	var pass = await hashPassword(password);
 
 
-	var query = `
-	INSERT INTO user 
-	(name, email, salt, hash) 
-	VALUES ("${name}", "${email}", "${pass.salt}", "${pass.hash}")
-	`;
-
+	var query = `INSERT INTO user (name, email, salt, hash) VALUES ("${name}", "${email}", "${pass.salt}", "${pass.hash}")`;
 
 	database.query(query, function (error, data) {
 
@@ -63,7 +58,6 @@ router.post("/signup", async (request, res) => {
 				httpOnly: true,
 			});
 
-			console.log("redirected");
 			res.redirect(`/profile`);
 		}
 
@@ -84,8 +78,13 @@ router.post("/login", async (req, res) => {
 				} else {
 					let hash = await bcrypt.hash(password, result[0].salt);
 					if (hash !== result[0].hash) {
-						console.log("passwords don't match");
-						res.redirect("/login");
+						const script = `
+						<script>
+						  alert('Password Incorrect');
+						  window.history.back();
+						</script>
+					  `;
+					  res.send(script);
 					} else {
 						const accessToken = createTokens(result[0]);
 						res.cookie("access-token", accessToken, {

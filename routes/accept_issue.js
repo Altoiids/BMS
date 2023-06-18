@@ -13,10 +13,7 @@ router.use(cookieParser());
 
 router.get("/accept_issue", validateToken, (req, res) => {
 
-	const query1 = `
-			SELECT r.*, u.*, b.* FROM request r INNER JOIN user u ON r.user_id = u.user_id INNER JOIN books b ON r.book_id = b.book_id
-			WHERE r.status = "issue requested" and b.Quantity>0;
-		  `;
+	const query1 = `SELECT r.*, u.*, b.* FROM request r INNER JOIN user u ON r.user_id = u.user_id INNER JOIN books b ON r.book_id = b.book_id WHERE r.status = "issue requested" and b.Quantity>0; `;
 
 
 	database.query(query1, (err, data) => {
@@ -34,8 +31,7 @@ router.post("/accept_ir", validateToken, (req, res) => {
 
 	const { recordId, bookId } = req.body;
 
-	var query2 = `
-				UPDATE request SET status = "owned" WHERE request_id = ${recordId};`;
+	var query2 = `UPDATE request SET status = "owned" WHERE request_id = ${recordId};`;
 
 	database.query(query2, (err, result) => {
 		if (err) {

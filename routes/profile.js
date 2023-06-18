@@ -13,7 +13,7 @@ router.use(cookieParser());
 
 router.get("/profile", validateToken, (req, res) => {
 	const username = req.username.name;
-	console.log(username);
+	
 	if (!username) {
 		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
 	} else {
@@ -21,7 +21,7 @@ router.get("/profile", validateToken, (req, res) => {
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
 				if (error) {
-					console.log(error);
+					
 					return;
 				}
 				if (!results[0]) {
@@ -29,13 +29,7 @@ router.get("/profile", validateToken, (req, res) => {
 				}
 				
 
-				const query1 = `
-                 SELECT b.*
-                 FROM request r
-                 JOIN books b ON r.book_id = b.book_id
-                 WHERE r.user_id = ${results[0].user_id} and r.status = 'owned';
-                 `;
-				console.log(results[0].user_id);
+				const query1 = `SELECT b.* FROM request r JOIN books b ON r.book_id = b.book_id WHERE r.user_id = ${results[0].user_id} and r.status = 'owned';`;
 
 				database.query(query1, (err, data) => {
 
@@ -51,12 +45,8 @@ router.get("/profile", validateToken, (req, res) => {
 router.post("/make_rr", validateToken, (req, res) => {
 
 	const { recordId, username, userId } = req.body;
-	console.log(recordId);
-	console.log(username);
-	console.log(userId);
-	var query2 = `
-				UPDATE request SET status = "return requested" WHERE user_id = ${userId} and book_id=${recordId};
-`;
+	
+	var query2 = `UPDATE request SET status = "return requested" WHERE user_id = ${userId} and book_id=${recordId};`;
 
 	database.query(query2, (err, result) => {
 		if (err) {
@@ -64,7 +54,7 @@ router.post("/make_rr", validateToken, (req, res) => {
 			res.sendStatus(500);
 		} else {
 			if (result.affectedRows > 0) {
-				res.redirect(`profile?username=${username}`);
+				res.redirect(`profile`);
 			} else {
 				res.sendStatus(404);
 			}

@@ -13,7 +13,7 @@ router.use(cookieParser());
 
 router.get("/browse", validateToken, (req, res) => {
 	var username = req.username.name;
-	console.log(username);
+	
 	if (!username) {
 		res.status(404).sendFile(path.join(rootDir, "views", "404.html"));
 	} else {
@@ -21,7 +21,6 @@ router.get("/browse", validateToken, (req, res) => {
 			`SELECT * FROM user WHERE name = ${database.escape(username)}`,
 			async (error, results) => {
 				if (error) {
-					console.log(error);
 					return;
 				}
 				if (!results[0]) {
@@ -30,12 +29,11 @@ router.get("/browse", validateToken, (req, res) => {
 
 
 				const query1 = `SELECT * FROM books WHERE Quantity >= 1;`;
-				console.log(results[0].user_id);
 
 				database.query(query1, (err, data) => {
 
 					if (err) throw err;
-					console.log(data);
+					
 					res.render(path.join(rootDir, "views", "browse_books.ejs"), { sampleData: data, username: username, user_id: results[0].user_id });
 
 				});
@@ -52,7 +50,7 @@ router.post("/issue", validateToken, (req, res) => {
 
 
 	const { recordId, userId, username } = req.body;
-	console.log(recordId);
+	
 
 	var query5 = `SELECT * FROM request WHERE book_id = ${recordId} and user_id = ${userId}`;
 
