@@ -87,7 +87,7 @@ router.post("/issue", validateToken, (req, res) => {
 			var query1 = `
 	INSERT INTO request
 	(book_id, user_id, status) 
-	VALUES ("${recordId}", "${userId}", "issue requested" )
+	VALUES ("${recordId}", "${userId}", "issue requested")
 	`;
 			database.query(query1, (err, result) => {
 				if (err) {

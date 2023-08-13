@@ -1,40 +1,266 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!---
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <%- include('./partials/homenavbar.ejs') %>
+      <div class="m-5">
+        <form method="POST" action="/login">
+          <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" name="email" class="form-control" id="inputEmail3">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input type="password" name="password" class="form-control" id="inputPassword3">
+            </div>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+  </body>
+
+  </html>
+  
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
+  </head>
+  <body>
 
-<body>
-  <%- include('./partials/homenavbar.ejs') %>
-    <div class="m-5">
-      <form method="POST" action="/login">
-        <div class="row mb-3">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" name="email" class="form-control" id="inputEmail3">
+    <section class="vh-100">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6 text-black">
+    <div class = "content-wrapper">
+            <div class="px-5 ms-xl-8">
+              <div class = "align_heading mt-5">
+              <span class="h1 fw-bold" style = "color:white">Welcome to <span class = "name"> mLH LIBRARY</span></span>
+            </div>
+          </div>
+    
+            <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+              <div class ="ml-3">
+    
+              <form style="width: 23rem;" method="POST" action="/login">
+    
+                <h3 class=" mb-3 pb-3" style="letter-spacing: 1px; font-weight:bolder; color:white  ">User Log in</h3>
+    
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form2Example18" style="color: white;">Email address</label>
+                  <input type="email" id="form2Example18" name = "email" class="form-control form-control-lg" />
+                  
+                </div>
+    
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form2Example28" style="color: white;">Password</label>
+                  <input type="password" id="form2Example28" class="form-control form-control-lg" name = "password" />
+                  
+                </div>
+    
+                <div class="pt-1 mb-4">
+                  <button class="btn my-custom-button btn-lg btn-block" type="submit" style="background-color: #EEBC4B; border-radius: 10%" >Login</button>
+                </div>
+                <p>Don't have an account? <a href="/signup" style="color: #EEBC4B;">Register here</a></p>
+    
+              </form>
+            </div>
+    
+            </div>
+          </div>
+          </div>
+          <div class="col-sm-6 px-0 d-none d-sm-block">
+            <img src="/assets/home.png"
+              alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
           </div>
         </div>
-        <div class="row mb-3">
-          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" name="password" class="form-control" id="inputPassword3">
-          </div>
-        </div>
-
-
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-    </div>
+      </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"></script>
-</body>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    
+  </body>
+  </html>
+  -->
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in & Sign up Form</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="box">
+        <div class="inner-box">
+          <div class="forms-wrap">
+            <form method="POST" action="/login" autocomplete="off" class="sign-in-form">
+              
+                <h1>Luminex Library</h1>
+              
+
+              <div class="heading">
+                <h3>Welcome Back</h3>
+                <h6>Not registred yet?</h6>
+                <a href="#" class="toggle">Sign up</a>
+              </div>
+
+              <div class="actual-form">
+                <div class="input-wrap">
+                  <input
+                    type="email"
+                    name = "email"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    name = "password"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+
+                <input type="submit" value="User Sign In" class="sign-btn" />
+
+                <a href="#" class="toggle">Login as admin</a>
+              </div>
+            </form>
+
+            <form method="POST" action="/signup" autocomplete="off" class="sign-up-form">
+              
+              
+              
+                
+                <h4>Luminex Library</h4>
+              
+
+              <div class="heading">
+                <h2>Get Started</h2>
+                <h6>Already have an account?</h6>
+                <a href="#" class="toggle">Sign in</a>
+              </div>
+
+              <div class="actual-form">
+                <div class="input-wrap">
+                  <input
+                    type="name"
+                    name="name"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Name</label>
+                </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="email"
+                    name="email"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    name="password"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    name="passwordc"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Confirm Password</label>
+                </div>
+
+                <input type="submit" value="Sign Up" class="sign-btn" />
+
+                
+              </div>
+            </form>
+          </div>
+
+          <div class="carousel">
+            <div class="images-wrapper">
+              <!-- <img src="/assets/cognitive.png" class="image img-1 show" alt="" />
+              <img src="/assets/stress.jpeg" class="image img-2" alt="" />
+              <img src="/assets/sleep.jpeg" class="image img-3" alt="" /> -->
+            </div>
+
+            <div class="text-slider">
+              <div class="text-wrap">
+                <div class="text-group">
+                  <h2>Books help improving focus</h2>
+                  <h2>Books help reducing stress</h2>
+                  <h2>Books help improving sleep quality</h2>
+                </div>
+              </div>
+
+              <div class="bullets">
+                <span class="active" data-value="1"></span>
+                <span data-value="2"></span>
+                <span data-value="3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/app.js"></script>
+  </body>
 </html>
+

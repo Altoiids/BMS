@@ -1,0 +1,43 @@
+.bg-image-vertical {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 100%;
+    }
+    body{
+        overflow-y: hidden;
+        background-color: #355195;
+    }
+    section{
+        background-color: #355195;
+    }
+    @media (min-width: 1025px) {
+    .h-custom-2 {
+    height: 100%;
+    }
+    }
+
+    .name{
+        color: #EEBC4B;
+    }
+button{
+
+    color: black;
+    background-color: #EEBC4B;
+}
+    p{
+        color: white;
+    }
+    .content-wrapper {
+        margin-top: 100px; /* Adjust the value to lower the content */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+   
+      .align_heading {
+        margin-left: 50px; /* Adjust the value to shift the content to the right */
+      }
+
+     

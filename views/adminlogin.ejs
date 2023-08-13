@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -38,4 +38,95 @@
             crossorigin="anonymous"></script>
 </body>
 
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in & Sign up Form</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="box">
+        <div class="inner-box">
+          <div class="forms-wrap">
+            <form method="POST" action="/login" autocomplete="off" class="sign-in-form">
+              
+                <h1>Luminex Library</h1>
+              
+
+              <div class="heading">
+                <h3>Welcome Back</h3>
+              </div>
+
+              <div class="actual-form">
+                <div class="input-wrap">
+                  <input
+                    type="email"
+                    name = "email"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    name = "password"
+                    minlength="4"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+
+                <input type="submit" value="Admin Sign In" class="sign-btn" />
+
+                <a href="#" class="toggle">Login as user</a>
+              </div>
+            </form>
+
+            <form method="POST" action="/signup" autocomplete="off" class="sign-up-form">
+              
+          
+
+
+          <div class="carousel">
+            <div class="images-wrapper">
+              <!-- <img src="/assets/cognitive.png" class="image img-1 show" alt="" />
+              <img src="/assets/stress.jpeg" class="image img-2" alt="" />
+              <img src="/assets/sleep.jpeg" class="image img-3" alt="" /> -->
+            </div>
+
+            <div class="text-slider">
+              <div class="text-wrap">
+                <div class="text-group">
+                  <h2>Books help improving focus</h2>
+                  <h2>Books help reducing stress</h2>
+                  <h2>Books help improving sleep quality</h2>
+                </div>
+              </div>
+
+              <div class="bullets">
+                <span class="active" data-value="1"></span>
+                <span data-value="2"></span>
+                <span data-value="3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/app.js"></script>
+  </body>
 </html>

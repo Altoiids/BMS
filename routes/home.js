@@ -4,7 +4,10 @@ const path = require('path');
 const rootDir = require("../path")
 
 router.get("/", (req, res) => {
-    res.render(path.join(rootDir, 'views', 'home.ejs'));
+    res.render(path.join(rootDir, 'views', 'login.ejs'));
+});
+router.get("/admin", (req, res) => {
+    res.render(path.join(rootDir, 'views', 'login.ejs'));
 });
 
 module.exports = router;

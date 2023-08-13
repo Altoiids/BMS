@@ -32,7 +32,7 @@ router.get("/user_issuerequest", validateToken, (req, res) => {
 				}
 
 
-				const query1 = `SELECT b.* FROM request r JOIN books b ON r.book_id = b.book_id WHERE r.user_id = ${results[0].user_id} and r.status = 'issue requested';`;
+				const query1 = x;
 
 
 				database.query(query1, (err, data) => {

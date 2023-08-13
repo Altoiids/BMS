@@ -20,9 +20,11 @@ const acceptreturn = require("./routes/accept_issue");
 const acceptissue = require("./routes/accept_return");
 const addadmin = require("./routes/add_admin");
 const viewadmin = require("./routes/view_admin");
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 
-app.set('views', path.join(__dirname, 'views'));
+
 
 
 app.use(express.json());
@@ -39,6 +41,11 @@ app.use(acceptissue);
 app.use(acceptreturn);
 app.use(addadmin);
 app.use(viewadmin);
+app.use(express.static(path.join(__dirname, '/public')));
+
+
+
+
 
 
 app.listen(3000, (error) => {

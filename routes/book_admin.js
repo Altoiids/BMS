@@ -1,4 +1,4 @@
-var express = require('express');
+// var express = require('express');
 var router = express.Router();
 var database = require('../database');
 const path = require('path');
@@ -85,6 +85,7 @@ router.post('/delete', validateToken, (req, res) => {
 			  `;
 			  res.send(script);
 
+			  
 			}
 		}
 	});

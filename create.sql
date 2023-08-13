@@ -2,7 +2,6 @@
                                 user_id int primary key auto_increment,
                                 name varchar(255)not null,
                                 email varchar(255)not null,
-                                salt char(60) NOT NULL,
                                 hash char(60) NOT NULL, 
                                 Admin_id int(1) NOT NULL default 0
                             )`;
